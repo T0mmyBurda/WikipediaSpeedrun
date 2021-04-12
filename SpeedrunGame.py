@@ -1,9 +1,15 @@
 from wikipedia import *
 from tkinter import *
 
+wikiBlue = "#A1C1FA"
+offWhite = "#F7F6F6"
+linkBlue = "#294DAC"
+
 window = Tk()
 window.geometry("400x600")
 window.title("Wikipedia Speedrun")
+
+linkGrid = Frame(window)
 
 GAMEFONT = "arial"
 
@@ -21,8 +27,17 @@ def playGame():
     startPage = wikipedia.random(pages=1)
     endPage = wikipedia.random(pages=1)
 
-    banner = Label(window , text = startPage + " to " + endPage , bg="green")
+    banner = Label(window , text = startPage + " to " + endPage , bg=wikiBlue , fg="black" , font=(GAMEFONT , 20))
     banner.pack(fill = BOTH)
+
+    redbutton = Button(window, text="Red", fg="red")
+    greenbutton = Button(window, text="green", fg="green")
+    #redbutton.grid(row = 0, column = 0, sticky = W, pady = 2)
+    #greenbutton.grid(row = 1, column = 0, sticky = W, pady = 2)
+    redbutton.pack()
+    greenbutton.pack()
+
+    mainloop()
 
     print("Get from " , startPage  , " to " , endPage)
 
@@ -38,6 +53,15 @@ def playGame():
 
         for num , link in enumerate(links):
             print(num , ":  " , link)
+
+        #b1 = Label(window , text = "text1" , bg=offWhite , fg="black" , font=(GAMEFONT , 20))
+        #b1.pack(fill = X)
+        #b2 = Label(window , text = "text2" , bg="white" , fg="black" , font=(GAMEFONT , 20))
+        #b2.pack(fill = X)
+
+        even = True #indexes at 0
+        #while(len(links) >= 3):
+
 
         print("ENTER THE NUMBER OF YOUR NEXT MOVE")
         inNum = input()
@@ -55,5 +79,8 @@ def clear():
     # for mac and linux(here, os.name is 'posix')
     else:
         _ = system('clear')
+
+def buttonPress():
+    pass
 
 playGame()
