@@ -14,18 +14,24 @@ linkGrid = Frame(window)
 GAMEFONT = "arial"
 
 pages = ["New York (state)" , "Yellowstone National Park" , "John Green (author)" , "Watchmen" , "Cheetos" ,
-         "St. Barnabas Episcopal Church (Troy, New York)" , "Aphanius baeticus" , "Python (programming language)" ,
+         "Yoshi" , "Aphanius baeticus" , "Python (programming language)" , "Frindle" , "Yoda" , "Toaster" ,
          "Ice pop"]
 
 startPage = ""
 endPage = ""
 curPage = ""
+links = []
+linkNum = 0
 
 def linkClicked(button):
     curPage = button
-    print("New Page: " , curPage)
+    if(curPage = endPage):
+        gameEnd()
+    else:
+        print("New Page: " , curPage)
+        loadLinks(curPage)
 
-def playGame():
+def startGame():
 
     steps = 0
     curPage = ""
@@ -59,7 +65,7 @@ def playGame():
         for i in range(numRows):
             row = []
             for j in range(3):
-                nextButton = 'Button(window , text="' + links[linkNum] + '" , padx=0 , pady=0 , width=15 , command=linkClicked(links[linkNum]))'
+                nextButton = 'Button(window , text="' + links[linkNum] + '" , padx=0 , pady=0 , width=15 , command=lambda:linkClicked("' + links[linkNum] + '"))'
                 row.append(eval(nextButton))
                 linkNum += 1
             linkMat.append(row)
@@ -79,42 +85,44 @@ def playGame():
 
 #   print("congratuations! you got from " , startPage , " to " , endPage , " in " , steps , " steps")
 
-def mainLoop():
-    while(curPage != endPage):
-        page = wikipedia.page(curPage)
-        links = page.links
+def loadLinks(curPage):
 
-        #print("HERE ARE ALL THE LINKS ON PAGE " , curPage , "/n")
+    page = wikipedia.page(curPage)
+    links = page.links
+   
+    for num , link in enumerate(links):
+        print(num , ":  " , link)
 
-        for num , link in enumerate(links):
-            print(num , ":  " , link)
+    even = True #indexes at 0
+    numCol = 3
+    numRows = len(links) // numCol
 
-        even = True #indexes at 0
-        numCol = 3
-        numRows = len(links) // numCol
-
-        linkMat = []
+    linkMat = []
         
-        linkNum = 0
-        for i in range(numRows):
-            row = []
-            for j in range(3):
-                nextButton = 'Button(window , text="' + links[linkNum] + '" , padx=0 , pady=0 , width=15 , command=Lambda: linkClicked(links[linkNum]))'
-                row.append(eval(nextButton))
-                linkNum += 1
-            linkMat.append(row)
+    linkNum = 0
+    for i in range(numRows):
+        row = []
+        for j in range(3):
+            nextButton = 'Button(window , text="' + links[linkNum] + '" , padx=0 , pady=0 , width=15 , command=lambda:linkClicked("' + links[linkNum] + '"))'
+            row.append(eval(nextButton))
+            linkNum += 1
+        linkMat.append(row)
 
-        print(linkMat)
+    print(linkMat)
 
-        for row in range(numRows):
-            for col in range(3):
-                linkMat[row][col].grid(row=row + 1 , column=col)
+    for row in range(numRows):
+        for col in range(3):
+            linkMat[row][col].grid(row=row + 1 , column=col)
 
 
-        print("ENTER THE NUMBER OF YOUR NEXT MOVE")
-        inNum = input()
-        curPage = links[int(inNum)]
-        steps += 1
+    print("ENTER THE NUMBER OF YOUR NEXT MOVE")
+    inNum = input()
+    curPage = links[int(inNum)]
+    steps += 1
+
+def gameEnd:
+    print("You Win, Game has ended!!!")
+    window.destroy()
 
 def clear():
   
@@ -129,4 +137,4 @@ def clear():
 def buttonPress():
     pass
 
-playGame()
+startGame()
